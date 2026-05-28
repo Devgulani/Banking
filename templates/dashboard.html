@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Axer Bank — Dashboard</title>
+    <meta name="description" content="Your Axer Bank account dashboard." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body class="dashboard-body">
+    <div class="dash-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Dashboard navigation">
+        <div class="sidebar-header">
+          <a class="brand sidebar-brand" href="{{ url_for('index') }}" aria-label="Go to homepage">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="brand-name">Axer Bank</span>
+          </a>
+          <button
+            class="sidebar-close"
+            type="button"
+            aria-label="Close navigation menu"
+            data-sidebar-close
+          >
+            ✕
+          </button>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Main">
+          <p class="sidebar-label">Menu</p>
+          <ul class="sidebar-list">
+            {% for item in nav_items %}
+              <li>
+                <a
+                  class="sidebar-link{% if item.slug == active_nav %} is-active{% endif %}"
+                  href="{{ item.href }}"
+                  data-nav="{{ item.slug }}"
+                >
+                  <span class="sidebar-link-icon" aria-hidden="true">{{ item.icon }}</span>
+                  <span class="sidebar-link-text">{{ item.label }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+
+        <div class="sidebar-account" aria-label="Active account">
+          <p class="sidebar-account-label">Active account</p>
+          <p class="sidebar-account-name">{{ account.name }}</p>
+          <p class="sidebar-account-number">{{ account.number_masked }}</p>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <span class="sidebar-avatar" aria-hidden="true">
+              {{ account.holder[0] }}
+            </span>
+            <div class="sidebar-user-info">
+              <span class="sidebar-user-name">{{ account.holder }}</span>
+              <span class="sidebar-user-role">Personal banking</span>
+            </div>
+          </div>
+          <a class="sidebar-link sidebar-link-muted" href="{{ url_for('index') }}">
+            <span class="sidebar-link-icon" aria-hidden="true">⌂</span>
+            <span class="sidebar-link-text">Home</span>
+          </a>
+          <a class="sidebar-link sidebar-link-muted" href="{{ url_for('login') }}">
+            <span class="sidebar-link-icon" aria-hidden="true">⎋</span>
+            <span class="sidebar-link-text">Sign out</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="sidebar-backdrop" id="sidebar-backdrop" hidden data-sidebar-close></div>
+
+      <div class="dash-panel">
+        <header class="dash-topbar">
+          <button
+            class="sidebar-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="sidebar"
+            id="sidebar-toggle"
+          >
+            <span class="sidebar-toggle-icon" aria-hidden="true"></span>
+            <span class="sidebar-toggle-label">Menu</span>
+          </button>
+          <h1 class="dash-topbar-title">Dashboard</h1>
+          <span class="pill pill-live">
+            <span class="live-dot" aria-hidden="true"></span>
+            Live
+          </span>
+        </header>
+
+        <main id="main" class="dash-main">
+          <div class="dash-main-inner">
+            <header class="dash-head" id="overview">
+              <div>
+                <p class="eyebrow">Good day, {{ account.holder.split()[0] }}</p>
+                <h2 class="dash-title">Your dashboard</h2>
+                <p class="subhead dash-subhead">
+                  Account {{ account.number_masked }} · {{ account.name }}
+                </p>
+              </div>
+            </header>
+
+            <div class="dash-grid">
+              <section class="dash-balance card" aria-label="Account balance">
+                <div class="card-top">
+                  <div>
+                    <p class="card-title">{{ account.name }}</p>
+                    <p class="card-subtitle">Current balance</p>
+                  </div>
+                  <span class="pill">{{ account.number_masked }}</span>
+                </div>
+
+                {% set whole = account.balance | int %}
+                {% set frac = "%.2f" | format(account.balance - whole) | replace("0.", "") %}
+                <div class="balance balance-lg">
+                  <span class="balance-currency">{{ account.currency }}</span>
+                  <span class="balance-amount">{{ "{:,}".format(whole) }}</span>
+                  <span class="balance-decimals">.{{ frac }}</span>
+                </div>
+
+                <div class="balance-meta">
+                  <div class="balance-stat">
+                    <span class="balance-stat-label">Available</span>
+                    <span class="balance-stat-value"
+                      >{{ account.currency }}{{ "{:,.2f}".format(account.available) }}</span
+                    >
+                  </div>
+                  <div class="balance-stat">
+                    <span class="balance-stat-label">Pending</span>
+                    <span class="balance-stat-value"
+                      >{{ account.currency }}{{ "{:,.2f}".format(account.balance - account.available) }}</span
+                    >
+                  </div>
+                </div>
+
+                <div class="balance-spark" aria-hidden="true">
+                  <svg viewBox="0 0 240 48" preserveAspectRatio="none">
+                    <path
+                      d="M0 38 L30 32 L60 36 L90 22 L120 28 L150 14 L180 20 L210 8 L240 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </section>
+
+              <section
+                class="dash-actions"
+                id="quick-actions"
+                aria-label="Quick actions"
+              >
+                <h2 class="dash-section-title">Quick actions</h2>
+                <div class="action-grid">
+                  {% for action in quick_actions %}
+                    <button
+                      class="action-card"
+                      type="button"
+                      data-action="{{ action.slug }}"
+                      aria-label="{{ action.label }}: {{ action.description }}"
+                    >
+                      <span class="action-icon" aria-hidden="true">{{ action.icon }}</span>
+                      <span class="action-label">{{ action.label }}</span>
+                      <span class="action-desc">{{ action.description }}</span>
+                    </button>
+                  {% endfor %}
+                </div>
+                <p class="card-footnote">
+                  Demo actions — connect each button to your banking APIs when ready.
+                </p>
+              </section>
+            </div>
+
+            <section
+              class="dash-transactions card"
+              id="transactions"
+              aria-label="Recent transactions"
+            >
+              <div class="tx-head">
+                <div>
+                  <h2 class="dash-section-title">Recent transactions</h2>
+                  <p class="card-subtitle">Last {{ transactions | length }} activities on this account</p>
+                </div>
+                <a class="btn btn-ghost btn-sm" href="#transactions">View all</a>
+              </div>
+
+              <div class="tx-table-wrap">
+                <table class="tx-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Description</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Date</th>
+                      <th scope="col" class="tx-amount-col">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for tx in transactions %}
+                      <tr>
+                        <td>
+                          <div class="tx-cell-desc">
+                            <span class="tx-icon" aria-hidden="true">
+                              {% if tx.type == 'credit' %}↓{% else %}↑{% endif %}
+                            </span>
+                            <span class="tx-desc">{{ tx.description }}</span>
+                          </div>
+                        </td>
+                        <td><span class="tx-category">{{ tx.category }}</span></td>
+                        <td><time datetime="{{ tx.date }}">{{ tx.date }}</time></td>
+                        <td class="tx-amount-col">
+                          <span class="{% if tx.amount > 0 %}pos{% else %}neg{% endif %}">
+                            {% if tx.amount > 0 %}+{% endif %}{{ account.currency }}{{ "{:,.2f}".format(tx.amount | abs) }}
+                          </span>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="tx-mobile" aria-label="Recent transactions list">
+                {% for tx in transactions %}
+                  <article class="tx-row-mobile">
+                    <div class="tx-row-mobile-main">
+                      <span class="tx-icon" aria-hidden="true">
+                        {% if tx.type == 'credit' %}↓{% else %}↑{% endif %}
+                      </span>
+                      <div>
+                        <p class="tx-desc">{{ tx.description }}</p>
+                        <p class="tx-meta">{{ tx.category }} · {{ tx.date }}</p>
+                      </div>
+                    </div>
+                    <span class="{% if tx.amount > 0 %}pos{% else %}neg{% endif %}">
+                      {% if tx.amount > 0 %}+{% endif %}{{ account.currency }}{{ "{:,.2f}".format(tx.amount | abs) }}
+                    </span>
+                  </article>
+                {% endfor %}
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <footer class="dash-footer">
+          <p class="muted">Demo dashboard · data refreshes on page load.</p>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const body = document.body;
+        const sidebar = document.getElementById("sidebar");
+        const backdrop = document.getElementById("sidebar-backdrop");
+        const toggle = document.getElementById("sidebar-toggle");
+        const navLinks = document.querySelectorAll(".sidebar-link[data-nav]");
+        const sections = ["overview", "transactions", "quick-actions"]
+          .map((id) => document.getElementById(id))
+          .filter(Boolean);
+
+        const setSidebarOpen = (open) => {
+          body.classList.toggle("sidebar-open", open);
+          toggle?.setAttribute("aria-expanded", open ? "true" : "false");
+          if (backdrop) backdrop.hidden = !open;
+        };
+
+        toggle?.addEventListener("click", () => {
+          setSidebarOpen(!body.classList.contains("sidebar-open"));
+        });
+
+        document.querySelectorAll("[data-sidebar-close]").forEach((el) => {
+          el.addEventListener("click", () => setSidebarOpen(false));
+        });
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            if (link.dataset.nav) setActiveNav(link.dataset.nav);
+            if (window.matchMedia("(max-width: 879px)").matches) {
+              setSidebarOpen(false);
+            }
+          });
+        });
+
+        const slugForSection = (id) => {
+          if (id === "overview") return "overview";
+          if (id === "transactions") return "transactions";
+          if (id === "quick-actions") return "actions";
+          return null;
+        };
+
+        const setActiveNav = (slug) => {
+          navLinks.forEach((link) => {
+            link.classList.toggle("is-active", link.dataset.nav === slug);
+          });
+        };
+
+        if (sections.length && "IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              const visible = entries
+                .filter((e) => e.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+              if (visible) {
+                const slug = slugForSection(visible.target.id);
+                if (slug) setActiveNav(slug);
+              }
+            },
+            { rootMargin: "-30% 0px -55% 0px", threshold: [0.1, 0.35, 0.6] }
+          );
+          sections.forEach((section) => observer.observe(section));
+        }
+
+        document.querySelectorAll(".action-card").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const label = btn.querySelector(".action-label")?.textContent ?? "Action";
+            btn.classList.add("is-pressed");
+            window.setTimeout(() => btn.classList.remove("is-pressed"), 200);
+            alert(`${label} — demo only. Wire this to your API.`);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

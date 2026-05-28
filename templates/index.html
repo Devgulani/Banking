@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Axer Bank — Modern Digital Banking</title>
+    <meta
+      name="description"
+      content="A modern banking homepage built with Flask, HTML, and CSS."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <details class="brand-menu">
+          <summary class="brand" aria-label="Open navigation menu">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="brand-name">Axer Bank</span>
+          </summary>
+
+          <nav class="nav-links" aria-label="Primary">
+            <a href="#home">Home</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </details>
+
+        <div class="nav-cta">
+          <a class="btn btn-ghost" href="{{ url_for('login') }}">Sign in</a>
+          <a class="btn btn-ghost" href="{{ url_for('signup') }}">New here?</a>
+          <a class="btn btn-ghost" href="#contact">Contact us</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="home" aria-label="Hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Premium digital banking</p>
+            <h1>Bank with confidence—clarity, control, and security in one place.</h1>
+            <p class="subhead">
+              Axer Bank brings a modern, professional banking experience with
+              real-time balances, instant transfers, and secure card controls—built
+              for daily use and long-term planning.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}">Open your account</a>
+              <a class="btn btn-primary btn-lg" href="{{ url_for('dashboard') }}">See the dashboard</a>
+            </div>
+
+            <div class="trust">
+              <div class="trust-item">
+                <span class="trust-number">Transparent</span>
+                <span class="trust-label">Pricing & statements</span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-number">24/7</span>
+                <span class="trust-label">Support & alerts</span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-number">Secure</span>
+                <span class="trust-label">Card & login controls</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-card" role="region" aria-label="Account snapshot">
+            <div class="card">
+              <div class="card-top">
+                <div>
+                  <p class="card-title">Everyday Account</p>
+                  <p class="card-subtitle">Balance</p>
+                </div>
+                <span class="pill">Live</span>
+              </div>
+
+              <div class="balance">
+                <span class="balance-currency">₹</span>
+                <span class="balance-amount">128,450</span>
+                <span class="balance-decimals">.25</span>
+              </div>
+
+              <div class="mini">
+                <div class="mini-row">
+                  <span>Salary</span>
+                  <span class="pos">+ ₹75,000</span>
+                </div>
+                <div class="mini-row">
+                  <span>Groceries</span>
+                  <span class="neg">- ₹2,180</span>
+                </div>
+                <div class="mini-row">
+                  <span>Rent</span>
+                  <span class="neg">- ₹28,000</span>
+                </div>
+              </div>
+
+              <div class="card-actions">
+                <button class="chip" type="button">Freeze card</button>
+                <button class="chip" type="button">Set limit</button>
+                <button class="chip" type="button">New transfer</button>
+              </div>
+              <p class="card-footnote">
+                Demo UI only. Hook this up to your real APIs when ready.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="dashboard" aria-label="Dashboard">
+        <div class="container">
+          <div class="section-head">
+            <h2>Clean dashboard styling</h2>
+            <p>
+              A quick snapshot of your accounts, cards, and recent activity—fast to read and easy to trust.
+            </p>
+          </div>
+
+          <div class="grid-3">
+            <article class="feature">
+              <div class="icon" aria-hidden="true">⚡</div>
+              <h3>Instant transfers</h3>
+              <p>
+                Send money in seconds with smart confirmations and clear status
+                updates.
+              </p>
+            </article>
+            <article class="feature">
+              <div class="icon" aria-hidden="true">🔒</div>
+              <h3>Card security controls</h3>
+              <p>
+                Freeze/unfreeze anytime, set limits, and get real-time alerts for
+                every payment.
+              </p>
+            </article>
+            <article class="feature">
+              <div class="icon" aria-hidden="true">📊</div>
+              <h3>Spending insights</h3>
+              <p>
+                Auto-categorized transactions and monthly summaries that are easy
+                to understand.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="login" aria-label="Login">
+        <div class="container split">
+          <div>
+            <h2>Login</h2>
+            <p>
+              Sign in to continue to your Axer Bank dashboard. (UI template—wire
+              this to your auth when ready.)
+            </p>
+            <ul class="checklist">
+              <li>Multi-factor authentication ready</li>
+              <li>Device-based sign-in alerts</li>
+              <li>Privacy-respecting defaults</li>
+              <li>Environment-based secrets (no keys in code)</li>
+            </ul>
+          </div>
+          <div class="callout">
+            <h3>Quick sign-in</h3>
+            <p>
+              Use email + password (or SSO) and keep sessions secure. This card
+              is a styled placeholder.
+            </p>
+            <div class="codebox" aria-label="Helpful links">
+              <div class="code-line"><span>Home</span> <code>#home</code></div>
+              <div class="code-line"><span>Dashboard</span> <code>#dashboard</code></div>
+              <div class="code-line"><span>Contact</span> <code>#contact</code></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact" aria-label="Contact">
+        <div class="container">
+          <div class="section-head">
+            <h2>Contact</h2>
+            <p>Questions? Reach our team anytime.</p>
+          </div>
+
+          <div class="pricing">
+            <div class="plan">
+              <h3>Support</h3>
+              <p class="price">24/7<span>help</span></p>
+              <ul>
+                <li>Email support</li>
+                <li>In-app chat</li>
+                <li>Help center</li>
+              </ul>
+              <a class="btn btn-ghost" href="{{ url_for('login') }}">Login</a>
+            </div>
+            <div class="plan featured" aria-label="Primary contact">
+              <div class="badge">Fast response</div>
+              <h3>Talk to us</h3>
+              <p class="price">15m<span>avg</span></p>
+              <ul>
+                <li>Account questions</li>
+                <li>Card issues</li>
+                <li>Security concerns</li>
+              </ul>
+              <a class="btn btn-primary" href="#contact">Start chat</a>
+            </div>
+            <div class="plan">
+              <h3>Branch</h3>
+              <p class="price">Find<span>nearby</span></p>
+              <ul>
+                <li>Open hours</li>
+                <li>ATM locations</li>
+                <li>Appointments</li>
+              </ul>
+              <a class="btn btn-ghost" href="#home">Back to top</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="faq" aria-label="FAQ">
+        <div class="container">
+          <div class="section-head">
+            <h2>FAQ</h2>
+            <p>Quick answers to common questions.</p>
+          </div>
+
+          <div class="faq">
+            <details>
+              <summary>Is this a real bank?</summary>
+              <p>
+                This is a modern homepage template. Connect it to your real
+                backend and compliance setup as needed.
+              </p>
+            </details>
+            <details>
+              <summary>How do I store API keys safely?</summary>
+              <p>
+                Put secrets in environment variables (or a local <code>.env</code>
+                file) and keep <code>.env</code> out of git using
+                <code>.gitignore</code>.
+              </p>
+            </details>
+            <details>
+              <summary>Can I keep the JSON endpoints?</summary>
+              <p>
+                Yes—this app keeps <code>/health</code> and <code>/api/echo</code>
+                working alongside the homepage.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer">
+        <div>
+          <div class="brand footer-brand">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="brand-name">Axer Bank</span>
+          </div>
+          <p class="muted">
+            Demo homepage built with Flask, HTML, and CSS.
+          </p>
+        </div>
+        <div class="footer-links">
+          <a href="#features">Features</a>
+          <a href="#security">Security</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
