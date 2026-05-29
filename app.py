@@ -212,10 +212,6 @@ def create_app() -> Flask:
     @login_required
     def cards():
         return render_template("cards.html", **dashboard_context("cards"))
-    
-    @app.route("/test")
-    def test():
-        return "Vercel Flask Working"
 
     @app.get("/analytics")
     @login_required
