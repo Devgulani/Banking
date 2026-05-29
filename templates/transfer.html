@@ -16,20 +16,23 @@
       <div class="tx-head">
         <div>
           <h2 class="dash-section-title">Transfer details</h2>
-          <p class="card-subtitle">Frontend validation only. No money is moved.</p>
+          <p class="card-subtitle">Transfers are validated and stored in SQLite.</p>
         </div>
       </div>
 
-      <div class="alert alert-success form-success" role="status" hidden>
-        Transfer request validated successfully.
-      </div>
+      {% if error %}
+        <div class="alert alert-error" role="alert">{{ error }}</div>
+      {% endif %}
+      {% if success %}
+        <div class="alert alert-success" role="status">{{ success }}</div>
+      {% endif %}
 
-      <form class="auth-form js-transfer-form" novalidate>
+      <form class="auth-form js-transfer-form" method="post" action="{{ url_for('transfer') }}" novalidate>
         <label class="field">
           <span class="label">Sender account</span>
           <select class="input" name="sender" required>
             <option value="">Choose account</option>
-            <option value="4821">Everyday Account - {{ account.number_masked }}</option>
+            <option value="{{ account.id }}">Everyday Account - {{ account.number_masked }}</option>
           </select>
           <span class="field-error" data-error-for="sender"></span>
         </label>
@@ -63,7 +66,7 @@
         <div class="mini-row"><span>Daily limit</span><strong>{{ account.currency }}50,000</strong></div>
         <div class="mini-row"><span>Status</span><strong class="pos">Ready</strong></div>
       </div>
-      <p class="card-footnote">Use this screen as the frontend shell for future payment APIs.</p>
+      <p class="card-footnote">Receiver account is the numeric user id shown in each account mask.</p>
     </aside>
   </div>
 {% endblock %}

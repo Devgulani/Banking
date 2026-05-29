@@ -37,14 +37,12 @@
     receiver(value) {
       if (!value) return "Receiver account is required.";
       if (!/^\d+$/.test(value)) return "Receiver account must be numeric.";
-      if (value.length < 6) return "Receiver account looks too short.";
       return "";
     },
     amount(value) {
       if (!value) return "Amount is required.";
       const amount = Number(value);
       if (!Number.isFinite(amount) || amount <= 0) return "Enter an amount greater than zero.";
-      if (amount > 125200) return "Amount exceeds available balance.";
       return "";
     },
     remarks(value) {
@@ -152,7 +150,7 @@
       const submit = form.querySelector("[type='submit']");
       submit?.classList.add("is-loading");
 
-      if (type === "transfer" || type === "support") {
+      if (type === "support") {
         event.preventDefault();
         window.setTimeout(() => {
           submit?.classList.remove("is-loading");
