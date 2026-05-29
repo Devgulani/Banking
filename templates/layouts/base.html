@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Axer Bank{% endblock %}</title>
+    <meta
+      name="description"
+      content="{% block meta_description %}A modern banking interface built with Flask.{% endblock %}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body class="{% block body_class %}{% endblock %}">
+    {% block header %}
+      {% include "partials/navbar.html" %}
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}
+      {% include "partials/footer.html" %}
+    {% endblock %}
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

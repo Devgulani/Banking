@@ -1,0 +1,50 @@
+<section class="dash-analytics card reveal" id="dashboard-analytics" aria-label="Spending analytics">
+  <div class="tx-head">
+    <div>
+      <h2 class="dash-section-title">Spending analytics</h2>
+      <p class="card-subtitle">Monthly overview of income, expenses, and savings</p>
+    </div>
+    <span class="pill">May 2026</span>
+  </div>
+
+  <div class="analytics-grid">
+    <div class="analytics-card">
+      <p class="analytics-label">Total income</p>
+      <h3 class="analytics-value pos">{{ account.currency }}75,000</h3>
+      <span class="analytics-trend">+12% from April</span>
+    </div>
+    <div class="analytics-card">
+      <p class="analytics-label">Total expenses</p>
+      <h3 class="analytics-value neg">{{ account.currency }}33,359</h3>
+      <span class="analytics-trend">-4% from April</span>
+    </div>
+    <div class="analytics-card">
+      <p class="analytics-label">Savings</p>
+      <h3 class="analytics-value">{{ account.currency }}41,641</h3>
+      <span class="analytics-trend">56% savings rate</span>
+    </div>
+  </div>
+
+  <div class="chart-container" aria-label="Spending by category">
+    <div class="bar-group" style="--bar-size: 52%">
+      <span class="bar-label">Food</span>
+      <div class="bar food"><span></span></div>
+      <span class="bar-value">{{ account.currency }}2.9k</span>
+    </div>
+    <div class="bar-group" style="--bar-size: 70%">
+      <span class="bar-label">Shopping</span>
+      <div class="bar shopping"><span></span></div>
+      <span class="bar-value">{{ account.currency }}4.8k</span>
+    </div>
+    <div class="bar-group" style="--bar-size: 92%">
+      <span class="bar-label">Housing</span>
+      <div class="bar housing"><span></span></div>
+      <span class="bar-value">{{ account.currency }}28k</span>
+    </div>
+    <div class="bar-group" style="--bar-size: 42%">
+      <span class="bar-label">Bills</span>
+      <div class="bar bills"><span></span></div>
+      <span class="bar-value">{{ account.currency }}1.7k</span>
+    </div>
+  </div>
+</section>

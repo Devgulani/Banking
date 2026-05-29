@@ -1,0 +1,58 @@
+{% macro category_class(category) -%}
+  {{ "tx-category-" ~ category|lower|replace(" ", "-") }}
+{%- endmacro %}
+
+<div class="tx-table-wrap">
+  <table class="tx-table">
+    <thead>
+      <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Category</th>
+        <th scope="col">Date</th>
+        <th scope="col" class="tx-amount-col">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tx in transactions %}
+        <tr>
+          <td>
+            <div class="tx-cell-desc">
+              <span class="tx-icon {{ tx.type }}" aria-hidden="true">
+                {% if tx.type == "credit" %}+{% else %}-{% endif %}
+              </span>
+              <span class="tx-desc">{{ tx.description }}</span>
+            </div>
+          </td>
+          <td>
+            <span class="tx-category {{ category_class(tx.category) }}">{{ tx.category }}</span>
+          </td>
+          <td><time datetime="{{ tx.date }}">{{ tx.date }}</time></td>
+          <td class="tx-amount-col">
+            <span class="{% if tx.amount > 0 %}pos{% else %}neg{% endif %}">
+              {% if tx.amount > 0 %}+{% endif %}{{ account.currency }}{{ "{:,.2f}".format(tx.amount | abs) }}
+            </span>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="tx-mobile" aria-label="Recent transactions list">
+  {% for tx in transactions %}
+    <article class="tx-row-mobile">
+      <div class="tx-row-mobile-main">
+        <span class="tx-icon {{ tx.type }}" aria-hidden="true">
+          {% if tx.type == "credit" %}+{% else %}-{% endif %}
+        </span>
+        <div>
+          <p class="tx-desc">{{ tx.description }}</p>
+          <p class="tx-meta">{{ tx.category }} / {{ tx.date }}</p>
+        </div>
+      </div>
+      <span class="{% if tx.amount > 0 %}pos{% else %}neg{% endif %}">
+        {% if tx.amount > 0 %}+{% endif %}{{ account.currency }}{{ "{:,.2f}".format(tx.amount | abs) }}
+      </span>
+    </article>
+  {% endfor %}
+</div>

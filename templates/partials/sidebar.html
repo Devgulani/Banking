@@ -1,0 +1,53 @@
+<aside class="sidebar" id="sidebar" aria-label="Dashboard navigation">
+  <div class="sidebar-header">
+    <a class="brand sidebar-brand" href="{{ url_for('index') }}" aria-label="Go to homepage">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Axer Bank</span>
+    </a>
+    <button class="sidebar-close" type="button" aria-label="Close navigation menu" data-sidebar-close>
+      x
+    </button>
+  </div>
+
+  <nav class="sidebar-nav" aria-label="Main">
+    <p class="sidebar-label">Menu</p>
+    <ul class="sidebar-list">
+      {% for item in nav_items %}
+        <li>
+          <a
+            class="sidebar-link{% if item.slug == active_nav %} is-active{% endif %}"
+            href="{{ item.href }}"
+            data-nav="{{ item.slug }}"
+          >
+            <span class="sidebar-link-icon" aria-hidden="true">{{ item.icon }}</span>
+            <span class="sidebar-link-text">{{ item.label }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <div class="sidebar-account" aria-label="Active account">
+    <p class="sidebar-account-label">Active account</p>
+    <p class="sidebar-account-name">{{ account.name }}</p>
+    <p class="sidebar-account-number">{{ account.number_masked }}</p>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <span class="sidebar-avatar" aria-hidden="true">{{ account.holder[0] }}</span>
+      <div class="sidebar-user-info">
+        <span class="sidebar-user-name">{{ account.holder }}</span>
+        <span class="sidebar-user-role">Personal banking</span>
+      </div>
+    </div>
+    <a class="sidebar-link sidebar-link-muted" href="{{ url_for('index') }}">
+      <span class="sidebar-link-icon" aria-hidden="true">H</span>
+      <span class="sidebar-link-text">Home</span>
+    </a>
+    <a class="sidebar-link sidebar-link-muted" href="{{ url_for('login') }}">
+      <span class="sidebar-link-icon" aria-hidden="true">Q</span>
+      <span class="sidebar-link-text">Sign out</span>
+    </a>
+  </div>
+</aside>

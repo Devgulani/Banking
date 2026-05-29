@@ -6,20 +6,20 @@ from datetime import datetime, timezone
 
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 
-# Demo banking data — replace with database queries in production.
+# Demo banking data - replace with database queries in production.
 DEMO_ACCOUNT = {
     "holder": "Anu Sharma",
     "name": "Everyday Account",
-    "number_masked": "•••• 4821",
+    "number_masked": "**** 4821",
     "balance": 128_450.25,
     "available": 125_200.00,
-    "currency": "₹",
+    "currency": "Rs.",
 }
 
 DEMO_TRANSACTIONS = [
     {
         "id": "tx-001",
-        "description": "Salary — Acme Corp",
+        "description": "Salary - Acme Corp",
         "category": "Income",
         "date": "2026-05-27",
         "amount": 75_000.00,
@@ -27,7 +27,7 @@ DEMO_TRANSACTIONS = [
     },
     {
         "id": "tx-002",
-        "description": "Rent — Maple Apartments",
+        "description": "Rent - Maple Apartments",
         "category": "Housing",
         "date": "2026-05-26",
         "amount": -28_000.00,
@@ -51,7 +51,7 @@ DEMO_TRANSACTIONS = [
     },
     {
         "id": "tx-005",
-        "description": "UPI — Rahul K.",
+        "description": "UPI - Rahul K.",
         "category": "Transfer",
         "date": "2026-05-23",
         "amount": 5_000.00,
@@ -68,20 +68,20 @@ DEMO_TRANSACTIONS = [
 ]
 
 DEMO_NAV_ITEMS = [
-    {"label": "Overview", "icon": "⌂", "href": "#overview", "slug": "overview"},
-    {"label": "Transactions", "icon": "↕", "href": "#transactions", "slug": "transactions"},
-    {"label": "Quick actions", "icon": "⚡", "href": "#quick-actions", "slug": "actions"},
-    {"label": "Cards", "icon": "▣", "href": "#quick-actions", "slug": "cards"},
-    {"label": "Statements", "icon": "📄", "href": "#transactions", "slug": "statements"},
+    {"label": "Overview", "icon": "OV", "href": "#overview", "slug": "overview"},
+    {"label": "Transactions", "icon": "TX", "href": "#transactions", "slug": "transactions"},
+    {"label": "Quick actions", "icon": "QA", "href": "#quick-actions", "slug": "actions"},
+    {"label": "Analytics", "icon": "AN", "href": "#dashboard-analytics", "slug": "analytics"},
+    {"label": "Statements", "icon": "ST", "href": "#transactions", "slug": "statements"},
 ]
 
 DEMO_QUICK_ACTIONS = [
-    {"label": "Transfer", "description": "Send money instantly", "icon": "↗", "slug": "transfer"},
-    {"label": "Pay bills", "description": "Utilities & recharges", "icon": "⚡", "slug": "bills"},
-    {"label": "Deposit", "description": "Add funds via UPI", "icon": "＋", "slug": "deposit"},
-    {"label": "Cards", "description": "Freeze & set limits", "icon": "▣", "slug": "cards"},
-    {"label": "Statements", "description": "Download PDF", "icon": "📄", "slug": "statements"},
-    {"label": "Support", "description": "Chat with us 24/7", "icon": "💬", "slug": "support"},
+    {"label": "Transfer", "description": "Send money instantly", "icon": "TR", "slug": "transfer"},
+    {"label": "Pay bills", "description": "Utilities and recharges", "icon": "PB", "slug": "bills"},
+    {"label": "Deposit", "description": "Add funds via UPI", "icon": "DP", "slug": "deposit"},
+    {"label": "Cards", "description": "Freeze and set limits", "icon": "CD", "slug": "cards"},
+    {"label": "Statements", "description": "Download PDF", "icon": "ST", "slug": "statements"},
+    {"label": "Support", "description": "Chat with us 24/7", "icon": "SP", "slug": "support"},
 ]
 
 
@@ -98,6 +98,7 @@ def create_app() -> Flask:
             "dashboard.html",
             account=DEMO_ACCOUNT,
             transactions=DEMO_TRANSACTIONS,
+            categories=sorted({tx["category"] for tx in DEMO_TRANSACTIONS}),
             quick_actions=DEMO_QUICK_ACTIONS,
             nav_items=DEMO_NAV_ITEMS,
             active_nav="overview",
@@ -169,4 +170,3 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", "5000"))
     debug = os.getenv("FLASK_DEBUG", "1") not in {"0", "false", "False"}
     app.run(host=host, port=port, debug=debug)
-

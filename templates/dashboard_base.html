@@ -1,0 +1,33 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Axer Bank - Dashboard{% endblock %}
+{% block meta_description %}Your Axer Bank account dashboard.{% endblock %}
+{% block body_class %}dashboard-body{% endblock %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+  <div class="dash-shell">
+    {% include "partials/sidebar.html" %}
+    <div class="sidebar-backdrop" id="sidebar-backdrop" hidden data-sidebar-close></div>
+
+    <div class="dash-panel">
+      {% include "partials/topbar.html" %}
+
+      <main id="main" class="dash-main">
+        <div class="dash-main-inner">
+          {% block dashboard_content %}{% endblock %}
+        </div>
+      </main>
+
+      <footer class="dash-footer">
+        <p class="muted">Demo dashboard. Data refreshes on page load.</p>
+      </footer>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

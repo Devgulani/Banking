@@ -1,116 +1,73 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Axer Bank — Sign up</title>
-    <meta name="description" content="Create an Axer Bank customer profile." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="container nav">
-        <a class="brand" href="{{ url_for('index') }}" aria-label="Go to homepage">
-          <span class="brand-mark" aria-hidden="true"></span>
-          <span class="brand-name">Axer Bank</span>
-        </a>
+{% extends "layouts/base.html" %}
 
-        <div class="nav-cta">
-          <a class="btn btn-ghost" href="{{ url_for('login') }}">Sign in</a>
-          <a class="btn btn-primary" href="{{ url_for('signup') }}">Sign up</a>
+{% block title %}Axer Bank - Sign up{% endblock %}
+{% block meta_description %}Create an Axer Bank customer profile.{% endblock %}
+
+{% block content %}
+  <main id="main">
+    <section class="section auth" aria-label="Sign up form">
+      <div class="container auth-grid">
+        <div class="auth-copy reveal">
+          <p class="eyebrow">New customer</p>
+          <h1>Create your customer profile</h1>
+          <p class="subhead">Enter your account number to generate a unique customer ID.</p>
+
+          <ul class="checklist auth-checklist">
+            <li>Unique customer ID per signup</li>
+            <li>Ready to connect to a database later</li>
+            <li>Secure-by-default form inputs</li>
+          </ul>
         </div>
-      </div>
-    </header>
 
-    <main id="main">
-      <section class="section auth" aria-label="Sign up form">
-        <div class="container auth-grid">
-          <div class="auth-copy">
-            <h1>Create your customer profile</h1>
-            <p class="subhead">
-              Enter your account number to generate a unique customer ID.
-            </p>
-
-            <ul class="checklist">
-              <li>Unique customer ID per signup</li>
-              <li>Ready to connect to a database later</li>
-              <li>Secure-by-default form inputs</li>
-            </ul>
+        <div class="card auth-card reveal">
+          <div class="auth-top">
+            <p class="card-title">Sign up</p>
+            <p class="card-subtitle">Account number required</p>
           </div>
 
-          <div class="card auth-card">
-            <div class="auth-top">
-              <p class="card-title">Sign up</p>
-              <p class="card-subtitle">Account number required</p>
-            </div>
+          {% if error %}
+            <div class="alert alert-error" role="alert">{{ error }}</div>
+          {% endif %}
+          {% if success %}
+            <div class="alert alert-success" role="status">{{ success }}</div>
+          {% endif %}
 
-            {% if error %}
-              <div class="alert alert-error" role="alert">{{ error }}</div>
-            {% endif %}
-            {% if success %}
-              <div class="alert alert-success" role="status">{{ success }}</div>
-            {% endif %}
+          <form class="auth-form" method="post" action="{{ url_for('signup') }}">
+            <label class="field">
+              <span class="label">Account number</span>
+              <input
+                class="input"
+                name="account_number"
+                inputmode="numeric"
+                autocomplete="off"
+                required
+                placeholder="e.g. 1234567890"
+              />
+            </label>
 
-            <form class="auth-form" method="post" action="{{ url_for('signup') }}">
-              <label class="field">
-                <span class="label">Account number</span>
-                <input
-                  class="input"
-                  name="account_number"
-                  inputmode="numeric"
-                  autocomplete="off"
-                  required
-                  placeholder="e.g. 1234567890"
-                />
-              </label>
+            <button class="btn btn-primary auth-submit" type="submit">Generate customer ID</button>
+          </form>
 
-              <button class="btn btn-primary auth-submit" type="submit">
-                Generate customer ID
-              </button>
-            </form>
-
-            {% if customer_id %}
-              <div class="codebox" aria-label="Generated customer ID">
-                <div class="code-line">
-                  <span>Customer ID</span>
-                  <code>{{ customer_id }}</code>
-                </div>
+          {% if customer_id %}
+            <div class="codebox auth-result" aria-label="Generated customer ID">
+              <div class="code-line">
+                <span>Customer ID</span>
+                <code>{{ customer_id }}</code>
               </div>
-            {% endif %}
-
-            <div class="auth-links">
-              <a class="link" href="{{ url_for('login') }}">Back to sign in</a>
             </div>
+          {% endif %}
 
-            <p class="muted auth-footnote">
-              Demo page: this does not store data yet.
-            </p>
+          <div class="auth-links">
+            <a class="link" href="{{ url_for('login') }}">Back to sign in</a>
           </div>
-        </div>
-      </section>
-    </main>
 
-    <footer class="site-footer">
-      <div class="container footer">
-        <div>
-          <div class="brand footer-brand">
-            <span class="brand-mark" aria-hidden="true"></span>
-            <span class="brand-name">Axer Bank</span>
-          </div>
-          <p class="muted">Demo signup page built with Flask.</p>
-        </div>
-        <div class="footer-links">
-          <a href="{{ url_for('index') }}">Home</a>
-          <a href="{{ url_for('login') }}">Sign in</a>
+          <p class="muted auth-footnote">Demo page: this does not store data yet.</p>
         </div>
       </div>
-    </footer>
-  </body>
-</html>
+    </section>
+  </main>
+{% endblock %}
 
+{% block scripts %}
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}
