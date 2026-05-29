@@ -1,0 +1,58 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Axer Bank - Support{% endblock %}
+
+{% block dashboard_content %}
+  <header class="dash-head reveal">
+    <div>
+      <p class="eyebrow">Help center</p>
+      <h2 class="dash-title">Support and contact</h2>
+      <p class="subhead dash-subhead">Find help, send a message, or start a demo chat.</p>
+    </div>
+  </header>
+
+  <div class="page-grid reveal">
+    <section class="card">
+      <h2 class="dash-section-title">Contact form</h2>
+      <div class="alert alert-success form-success" role="status" hidden>
+        Message validated successfully.
+      </div>
+      <form class="auth-form js-support-form" novalidate>
+        <label class="field">
+          <span class="label">Subject</span>
+          <input class="input" name="subject" required placeholder="How can we help?" />
+          <span class="field-error" data-error-for="subject"></span>
+        </label>
+        <label class="field">
+          <span class="label">Message</span>
+          <textarea class="input textarea" name="message" rows="5" required placeholder="Share a few details"></textarea>
+          <span class="field-error" data-error-for="message"></span>
+        </label>
+        <button class="btn btn-primary auth-submit" type="submit">Send message</button>
+      </form>
+    </section>
+
+    <aside class="card chat-card">
+      <h2 class="dash-section-title">Live chat</h2>
+      <div class="chat-window">
+        <p><strong>Axer Assist</strong></p>
+        <p>Hi Anu, this is a frontend chat placeholder. A support agent UI can connect here later.</p>
+      </div>
+      <button class="btn btn-secondary" type="button">Open chat</button>
+    </aside>
+  </div>
+
+  <section class="card reveal">
+    <h2 class="dash-section-title">Popular questions</h2>
+    <div class="faq">
+      <details open><summary>How do I freeze my card?</summary><p>Open Cards management and use the Freeze card control.</p></details>
+      <details><summary>Where can I view transfers?</summary><p>Open Transaction history from the sidebar or homepage shortcut.</p></details>
+      <details><summary>Can I update notification preferences?</summary><p>Yes, use Profile settings or the Notifications page.</p></details>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='validation.js') }}"></script>
+{% endblock %}

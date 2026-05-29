@@ -83,19 +83,19 @@
       </div>
       <div class="action-grid">
         {% for action in quick_actions %}
-          <button
+          <a
             class="action-card"
-            type="button"
             data-action="{{ action.slug }}"
+            href="{{ action.href }}"
             aria-label="{{ action.label }}: {{ action.description }}"
           >
             <span class="action-icon" aria-hidden="true">{{ action.icon }}</span>
             <span class="action-label">{{ action.label }}</span>
             <span class="action-desc">{{ action.description }}</span>
-          </button>
+          </a>
         {% endfor %}
       </div>
-      <p class="card-footnote">Demo actions are visual only.</p>
+      <p class="card-footnote">Each action opens a dedicated frontend page.</p>
     </section>
   </div>
 
@@ -107,7 +107,7 @@
         <h2 class="dash-section-title">Recent transactions</h2>
         <p class="card-subtitle">Last {{ transactions | length }} activities on this account</p>
       </div>
-      <a class="btn btn-ghost btn-sm" href="#transactions">View all</a>
+      <a class="btn btn-ghost btn-sm" href="{{ url_for('transactions') }}">View all</a>
     </div>
 
     <div class="tx-toolbar" aria-label="Transaction tools">

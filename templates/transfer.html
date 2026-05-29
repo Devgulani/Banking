@@ -1,0 +1,74 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Axer Bank - Transfer Money{% endblock %}
+
+{% block dashboard_content %}
+  <header class="dash-head reveal">
+    <div>
+      <p class="eyebrow">Payments</p>
+      <h2 class="dash-title">Transfer money</h2>
+      <p class="subhead dash-subhead">Validate details before sending a demo transfer.</p>
+    </div>
+  </header>
+
+  <div class="page-grid reveal">
+    <section class="card form-card">
+      <div class="tx-head">
+        <div>
+          <h2 class="dash-section-title">Transfer details</h2>
+          <p class="card-subtitle">Frontend validation only. No money is moved.</p>
+        </div>
+      </div>
+
+      <div class="alert alert-success form-success" role="status" hidden>
+        Transfer request validated successfully.
+      </div>
+
+      <form class="auth-form js-transfer-form" novalidate>
+        <label class="field">
+          <span class="label">Sender account</span>
+          <select class="input" name="sender" required>
+            <option value="">Choose account</option>
+            <option value="4821">Everyday Account - {{ account.number_masked }}</option>
+          </select>
+          <span class="field-error" data-error-for="sender"></span>
+        </label>
+
+        <label class="field">
+          <span class="label">Receiver account</span>
+          <input class="input" name="receiver" inputmode="numeric" placeholder="Numeric account number" required />
+          <span class="field-error" data-error-for="receiver"></span>
+        </label>
+
+        <label class="field">
+          <span class="label">Amount</span>
+          <input class="input" name="amount" inputmode="decimal" placeholder="e.g. 2500" required />
+          <span class="field-error" data-error-for="amount"></span>
+        </label>
+
+        <label class="field">
+          <span class="label">Remarks</span>
+          <textarea class="input textarea" name="remarks" rows="4" placeholder="Optional note"></textarea>
+          <span class="field-error" data-error-for="remarks"></span>
+        </label>
+
+        <button class="btn btn-primary auth-submit" type="submit" disabled>Review transfer</button>
+      </form>
+    </section>
+
+    <aside class="card">
+      <h2 class="dash-section-title">Transfer checklist</h2>
+      <div class="mini">
+        <div class="mini-row"><span>Available</span><strong>{{ account.currency }}{{ "{:,.2f}".format(account.available) }}</strong></div>
+        <div class="mini-row"><span>Daily limit</span><strong>{{ account.currency }}50,000</strong></div>
+        <div class="mini-row"><span>Status</span><strong class="pos">Ready</strong></div>
+      </div>
+      <p class="card-footnote">Use this screen as the frontend shell for future payment APIs.</p>
+    </aside>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='validation.js') }}"></script>
+{% endblock %}

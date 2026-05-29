@@ -1,0 +1,37 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Axer Bank - Transaction History{% endblock %}
+
+{% block dashboard_content %}
+  <header class="dash-head reveal">
+    <div>
+      <p class="eyebrow">History</p>
+      <h2 class="dash-title">Transaction history</h2>
+      <p class="subhead dash-subhead">Search, filter, and review account activity.</p>
+    </div>
+  </header>
+
+  <section class="dash-transactions card reveal" id="transactions" aria-label="Transaction history">
+    <div class="tx-head">
+      <div>
+        <h2 class="dash-section-title">All transactions</h2>
+        <p class="card-subtitle">{{ transactions | length }} demo activities on this account</p>
+      </div>
+    </div>
+
+    <div class="tx-toolbar" aria-label="Transaction tools">
+      <label class="tx-search">
+        <span class="tx-search-icon" aria-hidden="true"></span>
+        <input type="search" placeholder="Search transactions" aria-label="Search transactions" />
+      </label>
+      <div class="filter-pills" aria-label="Category filters">
+        <button class="filter-pill is-active" type="button">All</button>
+        {% for category in categories %}
+          <button class="filter-pill" type="button">{{ category }}</button>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% include "partials/transaction_list.html" %}
+  </section>
+{% endblock %}

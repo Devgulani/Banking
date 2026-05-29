@@ -1,0 +1,64 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Axer Bank - Cards{% endblock %}
+
+{% block dashboard_content %}
+  <header class="dash-head reveal">
+    <div>
+      <p class="eyebrow">Cards</p>
+      <h2 class="dash-title">Cards management</h2>
+      <p class="subhead dash-subhead">Manage demo card status, limits, and usage.</p>
+    </div>
+  </header>
+
+  <div class="page-grid reveal">
+    <section class="card bank-card-panel">
+      <div class="virtual-card">
+        <div class="card-top">
+          <span class="brand-name">Axer Bank</span>
+          <span class="pill">Debit</span>
+        </div>
+        <p class="virtual-card-number">**** **** **** 4821</p>
+        <div class="card-top">
+          <span>{{ account.holder }}</span>
+          <span>05/31</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="chip js-toggle-card" type="button" data-on="Freeze card" data-off="Unfreeze card">Freeze card</button>
+        <a class="chip" href="{{ url_for('transactions') }}">View usage</a>
+      </div>
+      <p class="card-footnote card-state">Card is active and ready for use.</p>
+    </section>
+
+    <section class="card">
+      <h2 class="dash-section-title">Spending limit</h2>
+      <label class="field">
+        <span class="label">Monthly limit</span>
+        <input class="input js-limit-range" type="range" min="5000" max="100000" step="5000" value="50000" />
+      </label>
+      <div class="limit-readout">Rs.50,000</div>
+      <div class="usage-meter"><span style="--w: 42%"></span></div>
+      <p class="card-footnote">Rs.21,000 used from the current monthly card limit.</p>
+    </section>
+  </div>
+
+  <section class="card reveal">
+    <div class="tx-head">
+      <div>
+        <h2 class="dash-section-title">Usage summary</h2>
+        <p class="card-subtitle">Recent card activity by channel</p>
+      </div>
+    </div>
+    <div class="analytics-grid">
+      <div class="analytics-card"><p class="analytics-label">Online</p><h3 class="analytics-value">Rs.12,450</h3></div>
+      <div class="analytics-card"><p class="analytics-label">POS</p><h3 class="analytics-value">Rs.6,800</h3></div>
+      <div class="analytics-card"><p class="analytics-label">ATM</p><h3 class="analytics-value">Rs.1,750</h3></div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='banking-pages.js') }}"></script>
+{% endblock %}

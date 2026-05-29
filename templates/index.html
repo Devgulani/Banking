@@ -71,9 +71,9 @@
             </div>
 
             <div class="card-actions">
-              <button class="chip" type="button">Freeze card</button>
-              <button class="chip" type="button">Set limit</button>
-              <button class="chip" type="button">New transfer</button>
+              <a class="chip" href="{{ url_for('cards') }}">Freeze card</a>
+              <a class="chip" href="{{ url_for('cards') }}">Set limit</a>
+              <a class="chip" href="{{ url_for('transfer') }}">New transfer</a>
             </div>
           </div>
         </div>
@@ -92,16 +92,19 @@
             <div class="icon" aria-hidden="true">IN</div>
             <h3>Instant transfers</h3>
             <p>Send money with clear confirmations, helpful labels, and status feedback.</p>
+            <a class="feature-link" href="{{ url_for('transfer') }}">Transfer money</a>
           </article>
           <article class="feature">
             <div class="icon" aria-hidden="true">LK</div>
             <h3>Card security controls</h3>
             <p>Freeze cards, manage limits, and keep high-risk actions easy to spot.</p>
+            <a class="feature-link" href="{{ url_for('cards') }}">Manage cards</a>
           </article>
           <article class="feature">
             <div class="icon" aria-hidden="true">CH</div>
             <h3>Spending insights</h3>
             <p>Review categories, monthly trends, and recent activity without visual clutter.</p>
+            <a class="feature-link" href="{{ url_for('analytics') }}">Open analytics</a>
           </article>
         </div>
       </div>
@@ -124,7 +127,41 @@
         </div>
 
         {% set account = {"currency": "Rs."} %}
-        {% include "partials/analytics_section.html" %}
+        <div class="homepage-analytics-stack">
+          {% include "partials/chart_suite.html" %}
+          <a class="btn btn-primary" href="{{ url_for('analytics') }}">Explore full analytics</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-transition" aria-label="Quick banking shortcuts">
+      <div class="container">
+        <div class="section-head">
+          <h2>Everything has a place</h2>
+          <p>Homepage actions now open dedicated banking screens with the same dashboard language.</p>
+        </div>
+        <div class="shortcut-grid">
+          <a class="action-card" href="{{ url_for('transfer') }}">
+            <span class="action-icon" aria-hidden="true">TR</span>
+            <span class="action-label">Transfer money</span>
+            <span class="action-desc">Sender, receiver, amount, and remarks</span>
+          </a>
+          <a class="action-card" href="{{ url_for('transactions') }}">
+            <span class="action-icon" aria-hidden="true">TX</span>
+            <span class="action-label">Transaction history</span>
+            <span class="action-desc">Search and review account activity</span>
+          </a>
+          <a class="action-card" href="{{ url_for('profile') }}">
+            <span class="action-icon" aria-hidden="true">PF</span>
+            <span class="action-label">Profile settings</span>
+            <span class="action-desc">Preferences and notifications</span>
+          </a>
+          <a class="action-card" href="{{ url_for('notifications') }}">
+            <span class="action-icon" aria-hidden="true">NT</span>
+            <span class="action-label">Notifications</span>
+            <span class="action-desc">Alerts and activity updates</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -144,7 +181,7 @@
               <li>In-app chat</li>
               <li>Help center</li>
             </ul>
-            <a class="btn btn-secondary" href="{{ url_for('login') }}">Sign in</a>
+            <a class="btn btn-secondary" href="{{ url_for('support') }}">Help center</a>
           </div>
           <div class="plan featured" aria-label="Primary contact">
             <div class="badge">Fast response</div>
@@ -155,7 +192,7 @@
               <li>Card issues</li>
               <li>Security concerns</li>
             </ul>
-            <a class="btn btn-primary" href="#contact">Start chat</a>
+            <a class="btn btn-primary" href="{{ url_for('support') }}">Start chat</a>
           </div>
           <div class="plan">
             <h3>Branch</h3>
@@ -165,7 +202,7 @@
               <li>ATM locations</li>
               <li>Appointments</li>
             </ul>
-            <a class="btn btn-secondary" href="#home">Back to top</a>
+            <a class="btn btn-secondary" href="{{ url_for('profile') }}">Set preference</a>
           </div>
         </div>
       </div>

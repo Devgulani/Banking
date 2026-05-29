@@ -1,0 +1,38 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Axer Bank - Notifications{% endblock %}
+
+{% block dashboard_content %}
+  <header class="dash-head reveal">
+    <div>
+      <p class="eyebrow">Alerts</p>
+      <h2 class="dash-title">Notifications</h2>
+      <p class="subhead dash-subhead">Recent activity, reminders, and account messages.</p>
+    </div>
+  </header>
+
+  <section class="card reveal">
+    <div class="notification-list">
+      <article class="notification-item unread">
+        <span class="action-icon">TX</span>
+        <div><strong>Salary credited</strong><p>Rs.75,000 was credited on 2026-05-27.</p></div>
+        <span class="pill">New</span>
+      </article>
+      <article class="notification-item">
+        <span class="action-icon">CD</span>
+        <div><strong>Card usage summary</strong><p>Your card spend is at 42% of the monthly limit.</p></div>
+        <span class="pill">Cards</span>
+      </article>
+      <article class="notification-item">
+        <span class="action-icon">AN</span>
+        <div><strong>Savings improved</strong><p>Your savings rate is trending above last month.</p></div>
+        <span class="pill">Insight</span>
+      </article>
+      <article class="notification-item">
+        <span class="action-icon">SP</span>
+        <div><strong>Support available</strong><p>Chat support is available for card and transfer questions.</p></div>
+        <span class="pill">Support</span>
+      </article>
+    </div>
+  </section>
+{% endblock %}

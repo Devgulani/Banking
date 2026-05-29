@@ -68,6 +68,31 @@
     });
   });
 
+  const txSearch = document.querySelector(".tx-search input");
+  const filterButtons = document.querySelectorAll(".filter-pill");
+  const txRows = document.querySelectorAll(".tx-table tbody tr, .tx-row-mobile");
+
+  const filterTransactions = () => {
+    const query = txSearch?.value.trim().toLowerCase() ?? "";
+    const active = document.querySelector(".filter-pill.is-active")?.textContent?.trim() ?? "All";
+
+    txRows.forEach((row) => {
+      const text = row.textContent.toLowerCase();
+      const matchesQuery = !query || text.includes(query);
+      const matchesCategory = active === "All" || text.includes(active.toLowerCase());
+      row.hidden = !(matchesQuery && matchesCategory);
+    });
+  };
+
+  txSearch?.addEventListener("input", filterTransactions);
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filterButtons.forEach((item) => item.classList.remove("is-active"));
+      button.classList.add("is-active");
+      filterTransactions();
+    });
+  });
+
   document.querySelectorAll(".reveal").forEach((el) => {
     el.classList.add("is-visible");
   });

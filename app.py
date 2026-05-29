@@ -68,21 +68,49 @@ DEMO_TRANSACTIONS = [
 ]
 
 DEMO_NAV_ITEMS = [
-    {"label": "Overview", "icon": "OV", "href": "#overview", "slug": "overview"},
-    {"label": "Transactions", "icon": "TX", "href": "#transactions", "slug": "transactions"},
-    {"label": "Quick actions", "icon": "QA", "href": "#quick-actions", "slug": "actions"},
-    {"label": "Analytics", "icon": "AN", "href": "#dashboard-analytics", "slug": "analytics"},
-    {"label": "Statements", "icon": "ST", "href": "#transactions", "slug": "statements"},
+    {"label": "Overview", "icon": "OV", "endpoint": "dashboard", "slug": "overview"},
+    {"label": "Transactions", "icon": "TX", "endpoint": "transactions", "slug": "transactions"},
+    {"label": "Transfer", "icon": "TR", "endpoint": "transfer", "slug": "transfer"},
+    {"label": "Cards", "icon": "CD", "endpoint": "cards", "slug": "cards"},
+    {"label": "Analytics", "icon": "AN", "endpoint": "analytics", "slug": "analytics"},
+    {"label": "Support", "icon": "SP", "endpoint": "support", "slug": "support"},
+    {"label": "Profile", "icon": "PF", "endpoint": "profile", "slug": "profile"},
+    {"label": "Notifications", "icon": "NT", "endpoint": "notifications", "slug": "notifications"},
 ]
 
 DEMO_QUICK_ACTIONS = [
-    {"label": "Transfer", "description": "Send money instantly", "icon": "TR", "slug": "transfer"},
-    {"label": "Pay bills", "description": "Utilities and recharges", "icon": "PB", "slug": "bills"},
-    {"label": "Deposit", "description": "Add funds via UPI", "icon": "DP", "slug": "deposit"},
-    {"label": "Cards", "description": "Freeze and set limits", "icon": "CD", "slug": "cards"},
-    {"label": "Statements", "description": "Download PDF", "icon": "ST", "slug": "statements"},
-    {"label": "Support", "description": "Chat with us 24/7", "icon": "SP", "slug": "support"},
+    {"label": "Transfer", "description": "Send money instantly", "icon": "TR", "endpoint": "transfer", "slug": "transfer"},
+    {"label": "Cards", "description": "Freeze and set limits", "icon": "CD", "endpoint": "cards", "slug": "cards"},
+    {"label": "Analytics", "description": "Review monthly trends", "icon": "AN", "endpoint": "analytics", "slug": "analytics"},
+    {"label": "History", "description": "Search all transactions", "icon": "TX", "endpoint": "transactions", "slug": "transactions"},
+    {"label": "Profile", "description": "Update preferences", "icon": "PF", "endpoint": "profile", "slug": "profile"},
+    {"label": "Support", "description": "Chat with us 24/7", "icon": "SP", "endpoint": "support", "slug": "support"},
 ]
+
+
+def dashboard_context(active_nav: str = "overview") -> dict:
+    nav_items = [
+        {
+            **item,
+            "href": url_for(item["endpoint"]),
+        }
+        for item in DEMO_NAV_ITEMS
+    ]
+    quick_actions = [
+        {
+            **action,
+            "href": url_for(action["endpoint"]),
+        }
+        for action in DEMO_QUICK_ACTIONS
+    ]
+    return {
+        "account": DEMO_ACCOUNT,
+        "transactions": DEMO_TRANSACTIONS,
+        "categories": sorted({tx["category"] for tx in DEMO_TRANSACTIONS}),
+        "quick_actions": quick_actions,
+        "nav_items": nav_items,
+        "active_nav": active_nav,
+    }
 
 
 def create_app() -> Flask:
@@ -94,15 +122,35 @@ def create_app() -> Flask:
 
     @app.get("/dashboard")
     def dashboard():
-        return render_template(
-            "dashboard.html",
-            account=DEMO_ACCOUNT,
-            transactions=DEMO_TRANSACTIONS,
-            categories=sorted({tx["category"] for tx in DEMO_TRANSACTIONS}),
-            quick_actions=DEMO_QUICK_ACTIONS,
-            nav_items=DEMO_NAV_ITEMS,
-            active_nav="overview",
-        )
+        return render_template("dashboard.html", **dashboard_context("overview"))
+
+    @app.get("/transfer")
+    def transfer():
+        return render_template("transfer.html", **dashboard_context("transfer"))
+
+    @app.get("/cards")
+    def cards():
+        return render_template("cards.html", **dashboard_context("cards"))
+
+    @app.get("/analytics")
+    def analytics():
+        return render_template("analytics.html", **dashboard_context("analytics"))
+
+    @app.get("/support")
+    def support():
+        return render_template("support.html", **dashboard_context("support"))
+
+    @app.get("/profile")
+    def profile():
+        return render_template("profile.html", **dashboard_context("profile"))
+
+    @app.get("/notifications")
+    def notifications():
+        return render_template("notifications.html", **dashboard_context("notifications"))
+
+    @app.get("/transactions")
+    def transactions():
+        return render_template("transactions.html", **dashboard_context("transactions"))
 
     @app.route("/login", methods=["GET", "POST"])
     def login():

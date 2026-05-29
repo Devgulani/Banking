@@ -1,0 +1,31 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Axer Bank - Analytics{% endblock %}
+
+{% block dashboard_content %}
+  <header class="dash-head reveal">
+    <div>
+      <p class="eyebrow">Insights</p>
+      <h2 class="dash-title">Analytics dashboard</h2>
+      <p class="subhead dash-subhead">Monthly summaries, category spending, and income trends.</p>
+    </div>
+  </header>
+
+  {% include "partials/chart_suite.html" %}
+  {% include "partials/analytics_section.html" %}
+
+  <section class="card reveal">
+    <div class="tx-head">
+      <div>
+        <h2 class="dash-section-title">Monthly summary</h2>
+        <p class="card-subtitle">A clean snapshot for planning</p>
+      </div>
+    </div>
+    <div class="summary-grid">
+      <div><span>Highest category</span><strong>Housing</strong></div>
+      <div><span>Lowest category</span><strong>Bills</strong></div>
+      <div><span>Average daily spend</span><strong>Rs.1,112</strong></div>
+      <div><span>Projected savings</span><strong class="pos">Rs.44,000</strong></div>
+    </div>
+  </section>
+{% endblock %}

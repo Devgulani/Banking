@@ -32,7 +32,32 @@
             <div class="alert alert-success" role="status">{{ success }}</div>
           {% endif %}
 
-          <form class="auth-form" method="post" action="{{ url_for('signup') }}">
+          <form class="auth-form js-auth-form" method="post" action="{{ url_for('signup') }}" data-form-type="signup" novalidate>
+            <label class="field">
+              <span class="label">Username</span>
+              <input
+                class="input"
+                name="username"
+                autocomplete="username"
+                required
+                placeholder="e.g. anu_sharma"
+              />
+              <span class="field-error" data-error-for="username"></span>
+            </label>
+
+            <label class="field">
+              <span class="label">Email</span>
+              <input
+                class="input"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                placeholder="name@example.com"
+              />
+              <span class="field-error" data-error-for="email"></span>
+            </label>
+
             <label class="field">
               <span class="label">Account number</span>
               <input
@@ -43,9 +68,46 @@
                 required
                 placeholder="e.g. 1234567890"
               />
+              <span class="field-error" data-error-for="account_number"></span>
             </label>
 
-            <button class="btn btn-primary auth-submit" type="submit">Generate customer ID</button>
+            <label class="field">
+              <span class="label">Password</span>
+              <span class="password-wrap">
+                <input
+                  class="input"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  placeholder="Create a strong password"
+                />
+                <button class="password-toggle" type="button" aria-label="Show password">Show</button>
+              </span>
+              <span class="strength-meter" aria-label="Password strength">
+                <span></span>
+              </span>
+              <span class="strength-label">Password strength</span>
+              <span class="field-error" data-error-for="password"></span>
+            </label>
+
+            <label class="field">
+              <span class="label">Confirm password</span>
+              <span class="password-wrap">
+                <input
+                  class="input"
+                  name="confirm_password"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  placeholder="Repeat password"
+                />
+                <button class="password-toggle" type="button" aria-label="Show password">Show</button>
+              </span>
+              <span class="field-error" data-error-for="confirm_password"></span>
+            </label>
+
+            <button class="btn btn-primary auth-submit" type="submit" disabled>Generate customer ID</button>
           </form>
 
           {% if customer_id %}
@@ -70,4 +132,5 @@
 
 {% block scripts %}
   <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script src="{{ url_for('static', filename='validation.js') }}"></script>
 {% endblock %}

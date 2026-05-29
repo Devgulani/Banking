@@ -32,7 +32,7 @@
             <div class="alert alert-success" role="status">{{ success }}</div>
           {% endif %}
 
-          <form class="auth-form" method="post" action="{{ url_for('login') }}">
+          <form class="auth-form js-auth-form" method="post" action="{{ url_for('login') }}" data-form-type="login" novalidate>
             <label class="field">
               <span class="label">Username</span>
               <input
@@ -42,21 +42,31 @@
                 required
                 placeholder="e.g. anu123"
               />
+              <span class="field-error" data-error-for="username"></span>
             </label>
 
             <label class="field">
               <span class="label">Password</span>
-              <input
-                class="input"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                required
-                placeholder="Your password"
-              />
+              <span class="password-wrap">
+                <input
+                  class="input"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                  placeholder="Your password"
+                />
+                <button class="password-toggle" type="button" aria-label="Show password">Show</button>
+              </span>
+              <span class="field-error" data-error-for="password"></span>
             </label>
 
-            <button class="btn btn-primary auth-submit" type="submit">Sign in</button>
+            <label class="remember-row">
+              <input type="checkbox" name="remember" />
+              <span>Remember this device</span>
+            </label>
+
+            <button class="btn btn-primary auth-submit" type="submit" disabled>Sign in</button>
           </form>
 
           <div class="auth-links">
@@ -74,4 +84,5 @@
 
 {% block scripts %}
   <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script src="{{ url_for('static', filename='validation.js') }}"></script>
 {% endblock %}
